@@ -30,3 +30,14 @@ text = "Clear"
 [node name="HitStopAnimBtn" type="Button" parent="VBoxContainer" unique_id=306643195]
 layout_mode = 2
 text = "HitStopAnim"
+
+[node name="HitStopShakeBasicBtn" type="Button" parent="VBoxContainer" unique_id=278575883]
+layout_mode = 2
+text = "HitStopShakeBasic"
+
+[node name="HitStopShakeFreezeBtn" type="Button" parent="VBoxContainer" unique_id=1201212910]
+layout_mode = 2
+text = "HitStopShakeFreeze"
+
+[node name="Someone" parent="." unique_id=1337949066 instance=ExtResource("2_ts1bw")]
+position = Vector2(1045, 145)

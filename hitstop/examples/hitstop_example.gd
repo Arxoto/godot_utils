@@ -6,17 +6,16 @@ extends Node2D
 @onready var label: Label = $VBoxContainer/Label
 @onready var clear_btn: Button = $VBoxContainer/ClearBtn
 @onready var hit_stop_anim_btn: Button = $VBoxContainer/HitStopAnimBtn
+@onready var hit_stop_shake_basic_btn: Button = $VBoxContainer/HitStopShakeBasicBtn
+@onready var hit_stop_shake_freeze_btn: Button = $VBoxContainer/HitStopShakeFreezeBtn
 
 func _ready() -> void:
-	clear_btn.pressed.connect(_on_clear_hit_stop)
-	hit_stop_anim_btn.pressed.connect(_on_hit_stop_anim_btn_pressed)
+	clear_btn.pressed.connect(_on_btn_pressed.bind(clear_btn.text, Someone.HitstopType.NA))
+	hit_stop_anim_btn.pressed.connect(_on_btn_pressed.bind(hit_stop_anim_btn.text, Someone.HitstopType.ANIM))
+	hit_stop_shake_basic_btn.pressed.connect(_on_btn_pressed.bind(hit_stop_shake_basic_btn.text, Someone.HitstopType.SHAKE_BASIC))
+	hit_stop_shake_freeze_btn.pressed.connect(_on_btn_pressed.bind(hit_stop_shake_freeze_btn.text, Someone.HitstopType.SHAKE_BASIC))
 
-func _on_clear_hit_stop() -> void:
-	label.text = "empty"
-	someone_hit.apply_hitstop(Someone.HitstopType.NA)
-	someone_hurt.apply_hitstop(Someone.HitstopType.NA)
-
-func _on_hit_stop_anim_btn_pressed() -> void:
-	label.text = "hit_stop_anim"
-	someone_hit.apply_hitstop(Someone.HitstopType.ANIM)
-	someone_hurt.apply_hitstop(Someone.HitstopType.ANIM)
+func _on_btn_pressed(msg: String, hitstop_type: Someone.HitstopType) -> void:
+	label.text = msg
+	someone_hit.apply_hitstop(hitstop_type)
+	someone_hurt.apply_hitstop(hitstop_type)

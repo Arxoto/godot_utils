@@ -1,8 +1,10 @@
 extends Node
 class_name HitstopAnim
 
+@export var slow_magnitude: float = 0.05
+@export var recover_sec: float = 0.1
+
 @onready var anim_player: AnimationPlayer = get_parent()
-# var anim_player: AnimationPlayer
 
 var _tween: Tween
 
@@ -12,24 +14,12 @@ func _ready() -> void:
 	anim_player.current_animation_changed.connect(_on_animation_changed) # 动画切换时触发（理论上），包括手动切换，存在 BUG 动画自然结束不触发
 	anim_player.animation_finished.connect(_on_animation_changed) # 非循环动画播放到末尾时触发，和上面的互补
 
-# func _enter_tree() -> void:
-# 	anim_player = get_parent()
-# 	anim_player.current_animation_changed.connect(_on_animation_changed)
-# 	anim_player.animation_finished.connect(_on_animation_changed)
-
-# func _exit_tree() -> void:
-# 	_kill_tween()
-# 	# 断开信号连接
-# 	if anim_player:
-# 		anim_player.current_animation_changed.disconnect(_on_animation_changed)
-# 		anim_player.animation_finished.disconnect(_on_animation_changed)
-
 ## 触发顿帧 [br]
 ## duration_sec 取值参考： [br]
 ## - 0.04s 在 60 FPS 下约等于 2-3 帧，适用于连击流畅、不影响手感的场景 [br]
 ## - 0.1s 在 60 FPS 下约等于 6 帧，适用于强调打击感、需要明显反馈的场景 [br]
 ## - 0.2s 在 60 FPS 下约等于 12 帧，能明显看到放缓动画（如果帧序列足够），适用于特写 [br]
-func trigger_hitstop(slow_magnitude: float = 0.05, duration_sec: float = 0.1, recover_sec: float = 0.1, force_hitstop: bool = false) -> void:
+func do_hitstop_anim(duration_sec: float = 0.1, force_hitstop: bool = false) -> void:
 	assert(slow_magnitude > 0.0 and slow_magnitude < 1.0, "Slow magnitude must be between 0 and 1")
 	assert(duration_sec > 0.0 and duration_sec < 0.3, "Duration must be between 0 and 0.3 seconds")
 	assert(recover_sec > 0.0 and recover_sec < 0.3, "Recover must be between 0 and 0.3 seconds")
