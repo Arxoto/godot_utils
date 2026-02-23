@@ -1,7 +1,7 @@
 /*
-- 震动：先强后缓，仅x轴
+- 震动：先强后缓，仅x轴震动（世界）
 - 闪白：先强后缓
-- 色散：先强后缓，仅x轴偏移
+- 色散：先强后缓，仅x轴偏移（世界）
 */
 
 shader_type canvas_item;
@@ -12,9 +12,9 @@ global uniform float current_time;
 // 实例独立变量
 instance uniform float start_time = -1.0;
 instance uniform float duration_time = 0.0;
-instance uniform float shake_intensity = 0.0;
-instance uniform float flash_intensity = 0.0;
-instance uniform float aberr_intensity = 0.0;
+instance uniform float shake_intensity = 0.0; // 震动偏移 单位是像素
+instance uniform float flash_intensity = 0.0; // 闪白的混合系数 不能超过 1
+instance uniform float aberr_intensity = 0.0; // 色散相对 UV 坐标的偏移 不能超过 1
 instance uniform vec2 fix_direction; // 修正方向
 
 // 所有共享资源的 shader 统一
@@ -38,9 +38,9 @@ void vertex() {
 	float mask = step(0.0, elapsed) * step(elapsed, duration_time);
 	// 计算进度 (0.0 到 1.0)
 	float p = clamp(elapsed / duration_time, 0.0, 1.0);
+
 	// 爆发式衰减曲线 (1-p)^3
 	float shake_val = pow(1.0 - p, 3.0) * shake_intensity * mask;
-	
 	// 高频非谐振波动计算
 	float t = current_time * 167.0; // 质数 防止与刷新率共振 151 157 163 167 173
 	float wave = (sin(t) * 0.7 + fast_noise(t)) * shake_val; // 平衡节奏与随机
@@ -55,8 +55,8 @@ void fragment() {
 	float p = clamp(elapsed / duration_time, 0.0, 1.0);
 	float flash_val = pow(1.0 - p, 5.0) * flash_intensity * mask; // 极速闪白
 	
-    // 色散偏移：距离受击中心越远，颜色裂开越明显
-	float aberration_val = pow(1.0 - p, 3.0) * aberr_intensity * mask;
+    // 色散偏移：衰减曲线、杂乱中有节奏
+	float aberration_val = pow(1.0 - p, 5.0) * aberr_intensity * mask;
     float t = current_time * 167.0;
     float shift = (sin(t) * 0.7 + fast_noise(t)) * aberration_val;
     float r = texture(TEXTURE, UV + fix_direction * shift).r;

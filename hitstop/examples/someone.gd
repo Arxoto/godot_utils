@@ -8,6 +8,7 @@ var move_type: String = "idle";
 @export var shake_intensity: float = 4.0
 @export var flash_intensity: float = 0.2
 @export var aberr_intensity: float = 0.2
+@export var impact_intensity: float = 4.0
 
 # signal on_hit()
 # signal on_hurt()
@@ -48,4 +49,7 @@ func do_hitstop(_area: Area2D):
 		hitstop_anim.do_hitstop_anim(duration_sec)
 	elif current_hitstop_type == HitstopType.SHAKE:
 		# 更换不同的 shader 需要在这里更换对应的方法
-		hitstop_shader_shake.do_hitstop_shake_transformed(duration_sec, shake_intensity, flash_intensity, aberr_intensity)
+		# hitstop_shader_shake.do_hitstop_shake_basic(duration_sec, shake_intensity, flash_intensity, aberr_intensity)
+		# hitstop_shader_shake.do_hitstop_shake_transformed(duration_sec, shake_intensity, flash_intensity, aberr_intensity)
+		var impact_direction := Vector2.LEFT if self.global_position.x < _area.global_position.x else Vector2.RIGHT
+		hitstop_shader_shake.do_hitstop_shake_freeze(duration_sec, shake_intensity, flash_intensity, aberr_intensity, impact_intensity, impact_direction)

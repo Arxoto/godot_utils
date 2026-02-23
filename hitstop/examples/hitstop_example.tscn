@@ -14,14 +14,12 @@ flash_intensity = 0.0
 [node name="SomeoneHurt" parent="." unique_id=1619206685 instance=ExtResource("2_ts1bw")]
 position = Vector2(764, 335)
 move_type = "move"
-aberr_intensity = 0.0
+impact_intensity = 4.0
 
 [node name="Someone" parent="." unique_id=1337949066 instance=ExtResource("2_ts1bw")]
-position = Vector2(573, 94)
+position = Vector2(958, 123)
 move_type = "rotate"
-shake_intensity = 24.0
-flash_intensity = 0.0
-aberr_intensity = 1.6
+aberr_intensity = 0.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1611018003]
 offset_right = 362.0

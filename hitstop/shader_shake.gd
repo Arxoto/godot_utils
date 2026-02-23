@@ -13,7 +13,7 @@ class_name HitstopShaderShake
 @onready var parent: CanvasItem = get_parent()
 
 ## 触发震动和色散和闪白效果，使用了 Shader 注意资源共享引发的问题 [br]
-## duration_time 取值参考 [method HitstopAnim.trigger_hitstop] [br]
+## duration_time 取值参考 [method HitstopAnim.do_hitstop_anim] [br]
 ## shake_intensity 取值 4.0 轻微震动，适用于小打击 [br]
 ## flash_intensity 取值 0.2 ，闪白会掩盖震动，一般色散与闪白用一个即可 [br]
 ## aberr_intensity 取值 0.2 ，色散会放大震动，一般色散与闪白用一个即可 [br]
@@ -66,17 +66,26 @@ func do_hitstop_shake_transformed(
 	# var local_v := local_target - local_source
 	# parent.set_instance_shader_parameter("fix_direction", local_v)
 
+## 触发震动和色散和闪白效果，使用了 Shader 注意资源共享引发的问题 [br]
+## duration_time 取值参考 [method HitstopAnim.do_hitstop_anim] [br]
+## shake_intensity 取值 4.0 轻微震动，适用于小打击 [br]
+## flash_intensity 取值 0.2 ，闪白会掩盖震动，一般色散与闪白用一个即可 [br]
+## aberr_intensity 取值 0.2 ，色散会放大震动，一般色散与闪白用一个即可 [br]
+## impact_intensity 取值 4.0 ，轻微卡顿 [br]
+## impact_direction 受击方向，控制击退方向 [br]
 func do_hitstop_shake_freeze(
 	duration_time: float = 0.1,
 	shake_intensity: float = 4.0,
 	flash_intensity: float = 0.0,
-	direction: Vector2 = Vector2.RIGHT
+	aberr_intensity: float = 0.2,
+	impact_intensity: float = 4.0,
+	impact_direction: Vector2 = Vector2.RIGHT,
 ) -> void:
 	var start_time := ShaderManager.current_time
 	parent.set_instance_shader_parameter("start_time", start_time)
 	parent.set_instance_shader_parameter("duration_time", duration_time)
 	parent.set_instance_shader_parameter("shake_intensity", shake_intensity)
 	parent.set_instance_shader_parameter("flash_intensity", flash_intensity)
-	parent.set_instance_shader_parameter("impact_direction", direction.normalized())
-
-# todo 验证 震动 色散 等效果
+	parent.set_instance_shader_parameter("aberr_intensity", aberr_intensity)
+	parent.set_instance_shader_parameter("impact_intensity", impact_intensity)
+	parent.set_instance_shader_parameter("impact_direction", impact_direction)
