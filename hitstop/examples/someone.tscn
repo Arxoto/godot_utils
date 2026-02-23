@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dujyl07ces8t4" path="res://framework/godot_utils/hitstop/examples/someone.gd" id="1_l5e4b"]
 [ext_resource type="Texture2D" uid="uid://4sg0b8itu6b0" path="res://icon.svg" id="2_6p675"]
 [ext_resource type="Script" uid="uid://c03kwxvhxlbfv" path="res://framework/godot_utils/hitstop/hitstop_anim.gd" id="2_l5e4b"]
-[ext_resource type="Shader" uid="uid://dewqj8hgkq6kj" path="res://framework/godot_utils/hitstop/shader_shake_basic.gdshader" id="4_fva5f"]
+[ext_resource type="Shader" uid="uid://bot3t63y31edp" path="res://framework/godot_utils/hitstop/shader_shake_transformed.gdshader" id="4_fva5f"]
 [ext_resource type="Script" uid="uid://dh45krvnoqilh" path="res://framework/godot_utils/hitstop/shader_shake.gd" id="5_fva5f"]
 
 [sub_resource type="Animation" id="Animation_vtk7s"]

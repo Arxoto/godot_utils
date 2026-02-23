@@ -6,11 +6,32 @@
 [node name="HitstopExample" type="Node2D" unique_id=1662905333]
 script = ExtResource("1_t27ag")
 
+[node name="SomeoneHit" parent="." unique_id=1054431403 instance=ExtResource("2_ts1bw")]
+position = Vector2(485, 329)
+move_type = "attack"
+flash_intensity = 0.0
+
+[node name="SomeoneHurt" parent="." unique_id=1619206685 instance=ExtResource("2_ts1bw")]
+position = Vector2(764, 335)
+move_type = "move"
+aberr_intensity = 0.0
+
+[node name="Someone" parent="." unique_id=1337949066 instance=ExtResource("2_ts1bw")]
+position = Vector2(573, 94)
+move_type = "rotate"
+shake_intensity = 24.0
+flash_intensity = 0.0
+aberr_intensity = 1.6
+
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1611018003]
-offset_right = 164.0
+offset_right = 362.0
 offset_bottom = 163.0
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
+
+[node name="Desc" type="Label" parent="VBoxContainer" unique_id=798059116]
+layout_mode = 2
+text = "点击按钮体验不同的HitStop效果，详见本场景脚本"
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=983130161]
 layout_mode = 2
@@ -24,27 +45,6 @@ text = "Clear"
 layout_mode = 2
 text = "HitStopAnim"
 
-[node name="HitStopShakeBasicBtn" type="Button" parent="VBoxContainer" unique_id=278575883]
+[node name="HitStopShakeBtn" type="Button" parent="VBoxContainer" unique_id=278575883]
 layout_mode = 2
-text = "HitStopShakeBasic"
-
-[node name="HitStopShakeFreezeBtn" type="Button" parent="VBoxContainer" unique_id=1201212910]
-layout_mode = 2
-text = "HitStopShakeFreeze"
-
-[node name="SomeoneHit" parent="." unique_id=1054431403 instance=ExtResource("2_ts1bw")]
-position = Vector2(485, 329)
-move_type = "attack"
-flash_intensity = 0.0
-aberr_intensity = 0.2
-
-[node name="SomeoneHurt" parent="." unique_id=1619206685 instance=ExtResource("2_ts1bw")]
-position = Vector2(764, 335)
-move_type = "move"
-flash_intensity = 0.2
-aberr_intensity = 0.2
-
-[node name="Someone" parent="." unique_id=1337949066 instance=ExtResource("2_ts1bw")]
-position = Vector2(922, 92)
-move_type = "rotate"
-flash_intensity = 0.0
+text = "HitStopShake"
