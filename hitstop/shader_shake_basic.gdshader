@@ -1,3 +1,9 @@
+/*
+- 震动：先强后缓，仅x轴
+- 闪白：先强后缓
+- 色散：先强后缓，仅x轴偏移
+*/
+
 shader_type canvas_item;
 
 // 全局自动同步变量 (需在项目设置中手动添加 Shader Global)
@@ -8,12 +14,11 @@ instance uniform float start_time = -1.0;
 instance uniform float duration_time = 0.0;
 instance uniform float shake_intensity = 0.0;
 instance uniform float flash_intensity = 0.0;
+instance uniform float aberr_intensity = 0.0;
 
 // 所有共享资源的 shader 统一
 // 闪白 颜色可调
 uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-// 色散强度：建议值 0.5 - 2.0
-uniform float aberration_strength = 1.0;
 
 float fast_noise(float t) {
     // fract(sin(t) * 43758.5453) - 0.5; // 依赖显卡的三角函数近似算法，部分机器宏观上可能效果不佳
@@ -33,11 +38,11 @@ void vertex() {
 	// 计算进度 (0.0 到 1.0)
 	float p = clamp(elapsed / duration_time, 0.0, 1.0);
 	// 爆发式衰减曲线 (1-p)^3
-	float intensity = pow(1.0 - p, 3.0) * shake_intensity * mask;
+	float shake_val = pow(1.0 - p, 3.0) * shake_intensity * mask;
 	
 	// 高频非谐振波动计算
 	float t = current_time * 167.0; // 质数 防止与刷新率共振 151 157 163 167 173
-	float x_offset = (sin(t) * 0.7 + fast_noise(t)) * intensity; // 平衡节奏与随机
+	float x_offset = (sin(t) * 0.7 + fast_noise(t)) * shake_val; // 平衡节奏与随机
 	
 	// 仅在 X 轴上进行高频偏移，模拟横向位移反馈
 	VERTEX.x += x_offset;
@@ -50,8 +55,9 @@ void fragment() {
 	float flash_val = pow(1.0 - p, 5.0) * flash_intensity * mask; // 极速闪白
 	
     // 色散偏移：距离受击中心越远，颜色裂开越明显
+	float aberration_val = pow(1.0 - p, 3.0) * aberr_intensity * mask;
     float t = current_time * 167.0;
-    float shift = (sin(t) * 0.7 + fast_noise(t)) * pow(1.0 - p, 3.0) * mask * 0.01 * aberration_strength;
+    float shift = (sin(t) * 0.7 + fast_noise(t)) * aberration_val;
     float r = texture(TEXTURE, UV + vec2(shift, 0.0)).r;
     float g = texture(TEXTURE, UV).g;
     float b = texture(TEXTURE, UV - vec2(shift, 0.0)).b;

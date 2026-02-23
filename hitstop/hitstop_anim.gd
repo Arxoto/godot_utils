@@ -1,4 +1,9 @@
 extends Node
+## 通过控制动画播放速度实现 hitstop 效果 [br]
+## 优点： [br]
+## - 逻辑清晰、打击感强 [br]
+## 缺点： [br]
+## - 若动画影响命中判定（客户端顿帧、服务端判定），则需要解决复杂的网络同步问题
 class_name HitstopAnim
 
 @export var slow_magnitude: float = 0.05

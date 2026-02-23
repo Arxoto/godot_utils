@@ -1,9 +1,13 @@
 extends Node2D
 class_name Someone
 
-@export var will_attack: bool = false
+@export_enum("attack", "idle", "rotate", "move")
+var move_type: String = "idle";
+
 @export var duration_sec: float = 0.1
 @export var shake_intensity: float = 4.0
+@export var flash_intensity: float = 0.8
+@export var aberr_intensity: float = 0.8
 
 # signal on_hit()
 # signal on_hurt()
@@ -33,10 +37,7 @@ func _ready() -> void:
 	weapon_model.area_entered.connect(do_hitstop)
 	body_model.area_entered.connect(do_hitstop)
 
-	if will_attack:
-		animation_player.play("attack")
-	else:
-		animation_player.play("idle")
+	animation_player.play(move_type)
 
 func apply_hitstop(hitstop_type: HitstopType):
 	current_hitstop_type = hitstop_type
@@ -47,6 +48,6 @@ func do_hitstop(_area: Area2D):
 	elif current_hitstop_type == HitstopType.ANIM:
 		hitstop_anim.do_hitstop_anim(duration_sec)
 	elif current_hitstop_type == HitstopType.SHAKE_BASIC:
-		hitstop_shader_shake.do_hitstop_shake_basic(shake_intensity, duration_sec)
+		hitstop_shader_shake.do_hitstop_shake_basic(duration_sec, shake_intensity, flash_intensity, aberr_intensity)
 	elif current_hitstop_type == HitstopType.SHAKE_FREEZE:
-		hitstop_shader_shake.do_hitstop_shake_freeze(shake_intensity, duration_sec, Vector2.RIGHT)
+		hitstop_shader_shake.do_hitstop_shake_freeze(duration_sec, shake_intensity)

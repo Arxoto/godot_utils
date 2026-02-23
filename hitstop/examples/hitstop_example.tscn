@@ -6,16 +6,9 @@
 [node name="HitstopExample" type="Node2D" unique_id=1662905333]
 script = ExtResource("1_t27ag")
 
-[node name="SomeoneHit" parent="." unique_id=1054431403 instance=ExtResource("2_ts1bw")]
-position = Vector2(485, 329)
-will_attack = true
-
-[node name="SomeoneHurt" parent="." unique_id=1619206685 instance=ExtResource("2_ts1bw")]
-position = Vector2(764, 335)
-
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1611018003]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 164.0
+offset_bottom = 163.0
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
@@ -39,5 +32,19 @@ text = "HitStopShakeBasic"
 layout_mode = 2
 text = "HitStopShakeFreeze"
 
+[node name="SomeoneHit" parent="." unique_id=1054431403 instance=ExtResource("2_ts1bw")]
+position = Vector2(485, 329)
+move_type = "attack"
+flash_intensity = 0.0
+aberr_intensity = 0.2
+
+[node name="SomeoneHurt" parent="." unique_id=1619206685 instance=ExtResource("2_ts1bw")]
+position = Vector2(764, 335)
+move_type = "move"
+flash_intensity = 0.2
+aberr_intensity = 0.2
+
 [node name="Someone" parent="." unique_id=1337949066 instance=ExtResource("2_ts1bw")]
-position = Vector2(1045, 145)
+position = Vector2(922, 92)
+move_type = "rotate"
+flash_intensity = 0.0
